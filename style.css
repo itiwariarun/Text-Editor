@@ -1,0 +1,44 @@
+
+* {
+  @apply box-border m-0 p-0;
+}
+body {
+  @apply bg-[#338cf4];
+}
+.container {
+  @apply bg-white w-[90vmin] absolute -translate-x-2/4 -translate-y-2/4 shadow-[0_25px_50px_rgba(7,20,35,0.2)] px-[30px] py-[50px] rounded-[10px] left-2/4 top-2/4;
+}
+.options {
+  @apply flex flex-wrap items-center gap-[15px];
+}
+button {
+  @apply h-7 w-7 grid place-items-center bg-white text-[#020929] rounded-[3px] border-[none];
+  outline: none;
+}
+select {
+  @apply border p-[7px] rounded-[3px] border-solid border-[#020929];
+}
+.options label,
+.options select {
+  font-family: "Poppins", sans-serif;
+}
+.input-wrapper {
+  @apply flex items-center gap-2;
+}
+input[type="color"] {
+  @apply appearance-none bg-transparent w-10 h-7 cursor-pointer border-[none];
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+input[type="color"]::-webkit-color-swatch {
+  @apply shadow-[0_0_0_2px_#ffffff,0_0_0_3px_#020929] rounded-[15px];
+}
+input[type="color"]::-moz-color-swatch {
+  @apply shadow-[0_0_0_2px_#ffffff,0_0_0_3px_#020929] rounded-[15px];
+}
+#quote-input {
+  @apply border h-[50vh] mt-2.5 p-5 border-solid border-[#dddddd];
+}
+.active {
+  @apply bg-[#e0e9ff];
+}

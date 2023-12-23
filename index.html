@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Editor with typing speed</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          screens: {
+            dark: { raw: '(prefers-color-scheme: dark)' },
+          },
+          colors: {
+            default: '#da373d',
+            dark: '#338cf4',
+            light: '#020929',
+          },
+
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+          .content-auto {
+            content-visibility: auto;
+                        }
+        * {
+            @apply box-border m-0 p-0;
+          }
+        .container {
+            @apply bg-white min-w-[90%] mt-40 md:mt-5 mx-auto shadow-md px-[30px] py-[50px] rounded-[10px];
+                    }
+        .options {
+            @apply flex flex-wrap items-center gap-[15px];
+                  }
+        button {
+            @apply h-7 w-7 grid place-items-center bg-white  rounded-[3px] border-[none];
+            outline: none;
+                }
+        select {
+            @apply border py-0.5 px-1.5 rounded-lg h-8 border-solid;
+                }
+        .options label,
+        .options select {
+            font-family: "Poppins", sans-serif;
+                        }
+        .input-wrapper {
+            @apply flex items-center gap-2;
+                        }
+        input[type="color"] {
+            @apply appearance-none bg-transparent w-10 h-7 cursor-pointer border-[none];
+            -webkit-appearance: none;
+            -moz-appearance: none;
+                            }
+        input[type="color"]::-webkit-color-swatch {
+            @apply shadow-[0_0_0_2px_#ffffff,0_0_0_3px_#020929] rounded-[15px];
+                                                  }
+        input[type="color"]::-moz-color-swatch {
+            @apply shadow-[0_0_0_2px_#ffffff,0_0_0_3px_#020929] rounded-[15px];
+                                                }
+        #text-input {
+            @apply border h-[50vh] rounded-lg mt-2.5 p-5 border-solid;
+                    }
+        }
+        /* Default Theme Styles */
+[data-theme="blue"] {
+  .bg-change{
+    @apply bg-blue-100/60;
+  }
+  .container{
+    @apply bg-blue-200/80;
+  }
+  button{
+    @apply text-blue-700;
+  }
+  select{
+    @apply border-blue-700;
+  }
+  #text-input {
+            @apply border-blue-700;
+                    }
+        .active {
+            @apply bg-blue-100;
+                }
+  @apply bg-blue-500 text-blue-800;
+}
+[data-theme="green"] {
+  /* Add default theme styles here */
+  .bg-change{
+    @apply bg-green-100/60;
+  }
+  .container{
+    @apply bg-green-200/80;
+  }
+  button{
+    @apply text-green-700;
+  }
+  select{
+    @apply border-green-700;
+  }
+  #text-input {
+            @apply border-green-700;
+                    }
+        .active {
+            @apply bg-green-100;
+                }
+  @apply bg-green-500 text-green-800;
+}
+[data-theme="yellow"] {
+  /* Add default theme styles here */
+  .bg-change{
+    @apply bg-yellow-100/60;
+  }
+  .container{
+    @apply bg-yellow-200/80;
+  }
+  button{
+    @apply text-yellow-700;
+  }
+  select{
+    @apply border-yellow-700;
+  }
+  #text-input {
+            @apply border-yellow-700;
+                    }
+        .active {
+            @apply bg-yellow-100;
+                }
+  @apply bg-yellow-500 text-yellow-800;
+}
+[data-theme="orange"] {
+  /* Add default theme styles here */
+  .bg-change{
+    @apply bg-orange-100/60;
+  }
+  .container{
+    @apply bg-orange-200/80;
+  }
+  button{
+    @apply text-orange-700;
+  }
+  select{
+    @apply border-orange-700;
+  }
+  #text-input {
+            @apply border-orange-700;
+                    }
+        .active {
+            @apply bg-orange-100;
+                }
+  @apply bg-orange-500 text-orange-800;
+}
+[data-theme="gray"] {
+  /* Add default theme styles here */
+  .bg-change{
+    @apply bg-gray-100/60;
+  }
+  .container{
+    @apply bg-gray-200/80;
+  }
+  button{
+    @apply text-gray-700;
+  }
+  select{
+    @apply border-gray-700;
+  }
+  #text-input {
+            @apply border-gray-700;
+                    }
+        .active {
+            @apply bg-gray-100;
+                }
+  @apply bg-gray-500 text-gray-800;
+}
+[data-theme="cyan"] {
+  /* Add default theme styles here */
+  .bg-change{
+    @apply bg-cyan-100/60;
+  }
+  .container{
+    @apply bg-cyan-200/80;
+  }
+  button{
+    @apply text-cyan-700;
+  }
+  select{
+    @apply border-cyan-700;
+  }
+  #text-input {
+            @apply border-cyan-700;
+                    }
+        .active {
+            @apply bg-cyan-100;
+                }
+  @apply bg-cyan-500 text-cyan-800;
+}
+[data-theme="teal"] {
+  /* Add default theme styles here */
+  .bg-change{
+    @apply bg-teal-100/60;
+  }
+  .container{
+    @apply bg-teal-200/80;
+  }
+  button{
+    @apply text-teal-700;
+  }
+  select{
+    @apply border-teal-700;
+  }
+  #text-input {
+            @apply border-teal-700;
+                    }
+        .active {
+            @apply bg-teal-100;
+                }
+  @apply bg-teal-500 text-teal-800;
+}
+[data-theme="slate"] {
+  .bg-change{
+    @apply bg-slate-100/60;
+  }
+  .container{
+    @apply bg-slate-200/80;
+  }
+  select{
+    @apply border-slate-700;
+  }
+  #text-input {
+            @apply border-slate-700;
+                    }
+        .active {
+            @apply bg-slate-100;
+                }
+  button{
+    @apply text-slate-700;
+  }
+  @apply bg-slate-500 text-slate-800;
+}
+
+/* Light Theme Styles */
+[data-theme="neutral"] {
+  /* Add light theme styles here */
+  .bg-change{
+    @apply bg-neutral-100/60;
+  }
+  .container{
+    @apply bg-neutral-200/80;
+  }
+  select{
+    @apply border-neutral-700;
+  }
+  #text-input {
+            @apply border-neutral-700;
+                    }
+        .active {
+            @apply bg-neutral-100;
+                }
+  button{
+    @apply text-neutral-700;
+  }
+  @apply bg-neutral-500 text-neutral-800;
+}
+      </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body data-theme="default" class="w-[100vw] px-10 th-pb-40 md:pb-5 w-[100dvw] h-[100vh] h-[100dvh] justify-center items-center flex flex-col">
+  <div class="options w-full p-5">
+    <!-- Theme Selector -->
+    <label for="themeSelector" class="sr-only">Select Theme</label>
+    <select id="themeSelector" class="adv-option-button absolute top-4 right-4  w-32 bg-change">
+      <option value="blue">Blue</option>
+      <option value="slate">Slate</option>
+      <option value="neutral">Neutral</option>
+      <option value="teal">Teal</option>
+      <option value="cyan">Cyan</option>
+      <option value="green">Green</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="gray">Gray</option>
+
+    </select>
+  </div>
+  <div class="container">
+
+    <div class="options">
+      <!-- Text Format -->
+      <button id="bold" class="option-button format bg-change">
+        <span class="sr-only">Bold</span>
+        <i class="fa-solid fa-bold"></i>
+      </button>
+      <button id="italic" class="option-button format bg-change">
+        <span class="sr-only">Italic</span>
+        <i class="fa-solid fa-italic"></i>
+      </button>
+      <button id="underline" class="option-button format bg-change">
+        <span class="sr-only">Underline</span>
+        <i class="fa-solid fa-underline"></i>
+      </button>
+      <button id="strikethrough" class="option-button formatbg-change ">
+        <span class="sr-only">Strike Through</span>
+        <i class="fa-solid fa-strikethrough"></i>
+      </button>
+      <button id="superscript" class="option-button script bg-change">
+        <span class="sr-only">SuperScript</span>
+        <i class="fa-solid fa-superscript"></i>
+      </button>
+      <button id="subscript" class="option-button script bg-change">
+        <span class="sr-only">Subscript</span>
+        <i class="fa-solid fa-subscript"></i>
+      </button>
+
+      <!-- List -->
+      <button id="insertOrderedList" class="option-button bg-change">
+        <span class="sr-only">Ordered List</span>
+        <div class="fa-solid fa-list-ol"></div>
+      </button>
+      <button id="insertUnorderedList" class="option-button bg-change">
+        <span class="sr-only">List</span>
+        <i class="fa-solid fa-list"></i>
+      </button>
+
+      <!-- Undo/Redo -->
+      <button id="undo" class="option-button bg-change">
+        <span class="sr-only">Undo</span>
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+      <button id="redo" class="option-button bg-change">
+        <span class="sr-only">Redo</span>
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+
+      <!-- Link -->
+      <button id="createLink" class="adv-option-button bg-change">
+        <span class="sr-only">Link</span>
+        <i class="fa fa-link"></i>
+      </button>
+      <button id="unlink" class="option-button bg-change">
+        <span class="sr-only">Unlink</span>
+        <i class="fa fa-unlink"></i>
+      </button>
+
+      <!-- Alignment -->
+      <button id="justifyLeft" class="option-button align bg-change">
+        <span class="sr-only">Left Alignment</span>
+
+        <i class="fa-solid fa-align-left"></i>
+      </button>
+      <button id="justifyCenter" class="option-button align bg-change">
+        <span class="sr-only">Center Alignment</span>
+        <i class="fa-solid fa-align-center"></i>
+      </button>
+      <button id="justifyRight" class="option-button align bg-change">
+        <span class="sr-only">Right Alignment</span>
+        <i class="fa-solid fa-align-right"></i>
+      </button>
+      <button id="justifyFull" class="option-button align bg-change">
+        <span class="sr-only">Justify Alignment</span>
+        <i class="fa-solid fa-align-justify"></i>
+      </button>
+      <button id="indent" class="option-button spacing bg-change">
+        <span class="sr-only">Indentation</span>
+        <i class="fa-solid fa-indent"></i>
+      </button>
+      <button id="outdent" class="option-button spacing bg-change">
+        <span class="sr-only">Outdent</span>
+        <i class="fa-solid fa-outdent"></i>
+      </button>
+
+      <!-- Headings -->
+      <label for="formatBlock" class="sr-only">format selector</label>
+      <select id="formatBlock" class="adv-option-button w-16 bg-change">
+        <option value="H1">H1</option>
+        <option value="H2">H2</option>
+        <option value="H3">H3</option>
+        <option value="H4">H4</option>
+        <option value="H5">H5</option>
+        <option value="H6">H6</option>
+      </select>
+
+      <!-- Font -->
+      <label for="fontName" class="sr-only">FontName selector</label>
+      <select id="fontName" class="adv-option-button th-max-w-[15rem] bg-change"></select>
+      <label for="fontSize" class="sr-only">FontSize selector</label>
+      <select id="fontSize" class="adv-option-button w-16 bg-change"></select>
+
+      <!-- Color -->
+      <div class="input-wrapper">
+        <input type="color" id="foreColor" class="adv-option-button" />
+        <label for="foreColor">Font Color</label>
+      </div>
+      <div class="input-wrapper">
+        <input type="color" id="backColor" class="adv-option-button" />
+        <label for="backColor">Highlight Color</label>
+      </div>
+    </div>
+    <div id="text-input" class="pt-10 bg-change" contenteditable="true"></div>
+   <div class="flex flex-col items-end"> <button id="start-stop-btn" class="bg-change rounded-lg option-button font-semibold text-2xl -tracking-tighter align h-full w-full flex justify-center items-center px-10 py-5 my-5">Start</button>
+    <p class="font-semibold text-lg -tracking-tighter">Typing Speed: <span id="typing-speed">0</span> WPM</p></div>
+  </div>
+  <!--Script-->
+  <script src="script.js"></script>
+</body>
+
+</html>
